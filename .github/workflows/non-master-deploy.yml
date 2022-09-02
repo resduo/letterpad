@@ -3,7 +3,7 @@ on:
   push:
     # branches-ignore:
     # - "master"
-    branches:
+    branches-ignore:
       - "try-sso"
 env:
   CYPRESS_CACHE_FOLDER: cypress/cache

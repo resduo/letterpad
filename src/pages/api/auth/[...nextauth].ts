@@ -15,6 +15,7 @@ import { basePath } from "@/constants";
 import { SessionData } from "@/graphql/types";
 
 const parsedSiteUrl = new URL(process.env.ROOT_URL);
+console.log(parsedSiteUrl);
 const isSecure = parsedSiteUrl.protocol === "https:";
 const host = parsedSiteUrl.host;
 
@@ -203,7 +204,7 @@ const options = (req: NextApiRequest): NextAuthOptions => ({
       options: {
         httpOnly: true,
         sameSite: "lax",
-        path: "/",
+        path: "/admin",
         domain: `.${host}`,
         secure: isSecure,
       },
