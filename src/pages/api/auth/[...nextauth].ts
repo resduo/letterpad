@@ -14,6 +14,10 @@ import { Role } from "@/__generated__/__types__";
 import { basePath } from "@/constants";
 import { SessionData } from "@/graphql/types";
 
+const parsedSiteUrl = new URL(process.env.ROOT_URL);
+const isSecure = parsedSiteUrl.protocol === "https:";
+const host = parsedSiteUrl.host;
+
 const providers = (_req: NextApiRequest) => [
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
@@ -193,6 +197,18 @@ const options = (req: NextApiRequest): NextAuthOptions => ({
     signIn: `${basePath}/login`,
   },
   secret: process.env.SECRET_KEY,
+  cookies: {
+    sessionToken: {
+      name: `${isSecure ? "__Secure-" : ""}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        domain: `.${host}`,
+        secure: isSecure,
+      },
+    },
+  },
 });
 
 const auth = (req: NextApiRequest, res: NextApiResponse) =>
