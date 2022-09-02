@@ -15,11 +15,10 @@ import { basePath } from "@/constants";
 import { SessionData } from "@/graphql/types";
 
 const parsedSiteUrl = new URL(process.env.ROOT_URL);
-console.log(parsedSiteUrl);
 const isSecure = parsedSiteUrl.protocol === "https:";
 const host = parsedSiteUrl.host;
 
-const providers = (_req: NextApiRequest) => [
+const providers = () => [
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
